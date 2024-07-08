@@ -2,6 +2,75 @@
 
 Proyek ini adalah submission pertama pada learning path **Back-End Developer** pada course **Belajar Fundamental Aplikasi Back-End** di [Dicoding](dicoding.com).
 
+## How to run
+
+### - Locally
+
+- Prerequisites
+
+  - Node.js installed on your local machine. You can download it from [nodejs.org](https://nodejs.org/).
+  - Postgresql database installed on your local machine. You can download it from [postgresql.org](https://www.postgresql.org/download/).
+
+- Installation
+
+  Clone the repository and install dependencies.
+
+  ```bash
+  git clone <repository-url>
+  cd <project-directory>
+  npm install
+  ```
+
+- Running
+
+  Make sure you have started your database server and then run this
+  ```bash
+  npm run migrate up
+  npm start
+  ```
+
+### - DevContainer (Docker)
+
+- Prerequisites
+
+  Make sure you have the following installed:
+
+  - **Visual Studio Code** ([VS Code](https://code.visualstudio.com/download))
+  - **Docker** (Docker Engine with Compose plugin or [Docker Desktop](https://www.docker.com/products/docker-desktop/))
+  - **Remote Development** extension pack for VS Code (Install from the VS Code Extensions marketplace)
+
+- Installation
+
+  1. Clone the repository:
+
+      ```bash
+      git clone <repository-url>
+      cd <project-directory>
+      ````
+
+  2. Open the project in VS Code
+
+      Make sure docker is running.
+
+  3. Reopen in Container:
+
+      Once you have the Remote - Containers extension installed, you'll see a green Remote indicator in the bottom-left corner of the VS Code window.
+      Click on the green indicator, or use Ctrl/Cmd + Shift + P to open the Command Palette and search for Remote-Containers: Reopen in Container.
+      Select your desired development container configuration (e.g., Node.js), and VS Code will reopen the project inside the container.
+  
+  4. Open Terminal and run this
+
+      ```bash
+      npm install
+      ```
+  
+- Running
+
+  ```bash
+  npm run migrate up
+  npm start
+  ```
+
 ## Studi Kasus
 
 Anda sebagai seorang Back-End Developer mendedikasikan diri untuk bergabung dengan tim TSC (Technical Steering Committee) dalam mengembangkan aplikasi pemutar musik terbuka bernama OpenMusic. Sesuai namanya, aplikasi ini menyediakan musik yang berlisensi gratis untuk semua orang.
