@@ -32,6 +32,7 @@ const init = async () => {
       options: {
         service: albumsService,
         validator: AlbumsValidator,
+        service2: songsService,
       },
     },
     {

@@ -38,8 +38,25 @@ class SongsService {
     return result.rows[0].id;
   }
 
-  async getSongs() {
-    const result = await this._pool.query("SELECT * FROM songs");
+  async getSongs({ title, performer }) {
+    let query = "SELECT * FROM songs";
+
+    const conditions = [];
+
+    if (title) {
+      conditions.push(`title ILIKE '%${title}%'`);
+    }
+
+    if (performer) {
+      conditions.push(`performer ILIKE '%${performer}%'`);
+    }
+
+    if (conditions.length > 0) {
+      query += " WHERE " + conditions.join(" AND ");
+    }
+
+    const result = await this._pool.query(query);
+
     return result.rows.map((row) => {
       return {
         id: row.id,
@@ -61,6 +78,26 @@ class SongsService {
     }
 
     return result.rows.map(mapDBToSongModel)[0];
+  }
+
+  async getSongByAlbumId(id) {
+    const query = {
+      text: "SELECT * FROM songs WHERE album_id = $1",
+      values: [id],
+    };
+    const result = await this._pool.query(query);
+
+    if (!result.rows.length) {
+      return [];
+    }
+
+    return result.rows.map((row) => {
+      return {
+        id: row.id,
+        title: row.title,
+        performer: row.performer,
+      };
+    });
   }
 
   async editSongById(id, { title, year, genre, performer, duration, albumId }) {
