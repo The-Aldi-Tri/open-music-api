@@ -12,11 +12,10 @@ class AlbumsService {
   async addAlbum({ name, year }) {
     const id = nanoid(16);
     const createdAt = Date.now();
-    const updatedAt = createdAt;
 
     const query = {
-      text: 'INSERT INTO albums VALUES($1, $2, $3, $4, $5) RETURNING id',
-      values: [id, name, year, createdAt, updatedAt],
+      text: 'INSERT INTO albums VALUES($1, $2, $3, $4, $4) RETURNING id',
+      values: [id, name, year, createdAt],
     };
 
     const result = await this._pool.query(query);
@@ -28,11 +27,6 @@ class AlbumsService {
     return result.rows[0].id;
   }
 
-  // async getAlbums() {
-  //   const result = await this._pool.query("SELECT * FROM albums");
-  //   return result.rows.map(mapDBToAlbumModel);
-  // }
-
   async getAlbumById(id) {
     const query = {
       text: 'SELECT * FROM albums WHERE id = $1',
@@ -40,11 +34,10 @@ class AlbumsService {
     };
     const result = await this._pool.query(query);
 
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('Album tidak ditemukan');
     }
-
-    return result.rows.map(mapDBToAlbumModel)[0];
+    return mapDBToAlbumModel(result.rows[0]);
   }
 
   async editAlbumById(id, { name, year }) {
@@ -56,7 +49,7 @@ class AlbumsService {
 
     const result = await this._pool.query(query);
 
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('Gagal memperbarui Album. Id tidak ditemukan');
     }
   }
@@ -69,7 +62,7 @@ class AlbumsService {
 
     const result = await this._pool.query(query);
 
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('Album gagal dihapus. Id tidak ditemukan');
     }
   }
